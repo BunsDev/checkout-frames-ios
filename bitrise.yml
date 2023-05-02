@@ -1,6 +1,5 @@
----
-format_version: '8'
-default_step_lib_source: 'https://github.com/bitrise-io/bitrise-steplib.git'
+format_version: "8"
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: ios
 trigger_map:
 - pull_request_source_branch: '*'
@@ -9,8 +8,6 @@ workflows:
   pr-checks:
     after_run:
     - frames-pr-checks
-
-  # frames pr workflows
   frames-pr-checks:
     after_run:
     - _frames-set-up
@@ -76,7 +73,6 @@ workflows:
         inputs:
         - webhook_url: $iOSBuildsChannel
     after_run: []
-  
   frames-test-spm:
     steps:
     - activate-ssh-key@4:
@@ -113,8 +109,6 @@ workflows:
             # run carthage update command.
             xcodebuild "-workspace" "iOS Example Frame Carthage/iOS Example Frame Carthage.xcworkspace" "-scheme" "iOS Example Frame" "-configuration" "Debug" "-destination" "id=0DD4E294-6C62-4FAD-AEBE-B021CF8DAA56" "COMPILER_INDEX_STORE_ENABLE=NO" "CODE_SIGNING_ALLOWED=NO" "build" | xcpretty
     - cache-push@2: {}
-  
-  # frames misc workflows
   frames-deploy:
     steps:
     - activate-ssh-key@4:
@@ -168,7 +162,6 @@ workflows:
     after_run: []
     before_run:
     - _frames-set-up
-
 app:
   envs:
   - opts:
@@ -197,7 +190,7 @@ app:
     FRAMES_UITEST_SCHEME: UITest
   - opts:
       is_expand: false
-    CARTHAGE_XCFRAMEWORK: '--use-xcframeworks --platform iOS --cache-builds'
+    CARTHAGE_XCFRAMEWORK: --use-xcframeworks --platform iOS --cache-builds
   - opts:
       is_expand: false
     CARTHAGE_FOLDER: Carthage
@@ -206,5 +199,5 @@ app:
     BITRISE_DISTRIBUTION_METHOD: development
 meta:
   bitrise.io:
-    stack: osx-xcode-13.4.x
+    stack: osx-xcode-14.3.x-ventura
     machine_type_id: g2.4core
