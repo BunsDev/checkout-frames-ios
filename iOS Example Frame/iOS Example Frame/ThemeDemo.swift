@@ -27,6 +27,11 @@ enum ThemeDemo {
                                                        titleText: "Billing details")
         billingSummary.borderStyle.normalColor = .white
         billingSummary.borderStyle.borderWidth = 1
+        billingSummary.borderStyle.normalColor = .red
+
+        billingSummary.cornerRadius = 20
+        billingSummary.borderColor = .red
+        billingSummary.borderWidth = 2
 
         var cardholderInput = theme.buildPaymentInput(isTextFieldNumericInput: false,
                                                       titleText: "Cardholder name",
