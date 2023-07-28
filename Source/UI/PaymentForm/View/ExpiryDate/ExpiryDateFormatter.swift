@@ -66,7 +66,9 @@ struct ExpiryDateFormatter {
         }
 
         displayString += year
-        let currentYear = Calendar(identifier: .gregorian).component(.year, from: Date())
+
+        let currentDate = Date()
+        let currentYear = Calendar(identifier: .gregorian).component(.year, from: currentDate)
         let currentYearLast2Digits = currentYear % 100
 
         if year.count == 1 {
@@ -77,7 +79,15 @@ struct ExpiryDateFormatter {
                 return (displayString, nil)
             }
         }
+
+        let currentMonth = Calendar(identifier: .gregorian).component(.month, from: currentDate)
+        guard let monthInt = Int(month) else {
+            return (nil, nil)
+        }
+
         if yearInt < currentYearLast2Digits {
+            return (displayString, .inThePast)
+        } else if yearInt == currentYearLast2Digits && monthInt < Int(currentMonth) {
             return (displayString, .inThePast)
         } else {
             return (displayString, nil)
