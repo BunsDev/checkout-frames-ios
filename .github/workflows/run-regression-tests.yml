@@ -1,0 +1,20 @@
+name: Check PR
+
+on: workflow_dispatch
+
+env:
+  destination: "platform=iOS Simulator,name=iPhone 14 Pro,OS=latest"
+  configuration: "Debug"
+
+jobs:
+  run-regression-tests:
+    name: Run Regression Tests
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Run Regression Tests
+        run: |
+          set -o pipefail && xcodebuild "test" "-project" "Checkout/Samples/SPMSample/CheckoutSPMSample.xcodeproj" "-scheme" "Regression Tests" "-configuration" "${configuration}" "-destination" "${destination}" | xcpretty
